@@ -2,9 +2,10 @@
   "name": "mean-eshop-backend",
   "version": "1.0.0",
   "description": "Build E-Shop with Admin Panel using the technologies: Nodejs , Mongo, Angular 12, Nrwl NX Monorepo, PrimeNG",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [
     "angular",
@@ -15,5 +16,11 @@
     "typescript"
   ],
   "author": "Aleksey Belchenkov",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }

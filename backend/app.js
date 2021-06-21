@@ -1,11 +1,14 @@
 const express = require('express');
 
+require('dotenv/config');
 const app = express();
 
-const PORT = 3005;
-const HOST = 'http://localhost';
+// env
+const PORT = process.env.PORT || 3005;
+const HOST = process.env.HOST || 'http://localhost';
+const api = process.env.API_URL;
 
-app.get('/', (req, res) => {
+app.get(`${api}/products`, (req, res) => {
     res.send('MERN E-Shop');
 })
 

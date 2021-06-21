@@ -12,24 +12,21 @@ const MONGO_URL = process.env.MONGO_URL;
 const DB_NAME = process.env.DB_NAME;
 const API = process.env.API_URL;
 
+// routes
+const categoriesRoutes = require('./routes/categories');
+const productsRoutes = require('./routes/products');
+const usersRoutes = require('./routes/users');
+const ordersRoutes = require('./routes/orders');
+
 // middlewares
 app.use(express.json());
 app.use(morgan('tiny'));
 
-app.get(`${API}/products`, (req, res) => {
-    const product = {
-        id: 1,
-        name: "hair dresser",
-        image: 'url'
-    }
-    res.send(product);
-});
-
-app.post(`${API}/products`, (req, res) => {
-    const newProduct = req.body;
-
-    res.send(newProduct);
-});
+// routes middlewares
+app.use(`${API}/products`, productsRoutes);
+app.use(`${API}/categories`, categoriesRoutes);
+app.use(`${API}/users`, usersRoutes);
+app.use(`${API}/orders`, ordersRoutes);
 
 mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,

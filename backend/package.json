@@ -1,0 +1,19 @@
+{
+  "name": "mean-eshop-backend",
+  "version": "1.0.0",
+  "description": "Build E-Shop with Admin Panel using the technologies: Nodejs , Mongo, Angular 12, Nrwl NX Monorepo, PrimeNG",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angular",
+    "node.js",
+    "mean",
+    "mongodb",
+    "express.js",
+    "typescript"
+  ],
+  "author": "Aleksey Belchenkov",
+  "license": "ISC"
+}

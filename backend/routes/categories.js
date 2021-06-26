@@ -9,7 +9,31 @@ router.get(`/`, async (req, res) =>{
     if(!categoryList) {
         res.status(500).json({success: false})
     }
-    res.send(categoryList);
+
+    res.status(200).send(categoryList);
+});
+
+router.get(`/:id`, async (req, res) =>{
+    const { id } = req.params;
+
+    try {
+        const category = await Category.findById(id);
+
+        if(!category) {
+            res.status(404).json({
+                success: false,
+                message: 'The category is not found!'
+            })
+        }
+
+        res.status(200).send(category);
+    } catch (error) {
+        console.error(error.name + ': ' + error.message);
+        return res.status(400).json({
+            success: false,
+            error
+        });
+    }
 });
 
 router.post('/', async (req, res) => {

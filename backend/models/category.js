@@ -10,10 +10,10 @@ const categorySchema = mongoose.Schema({
     },
     color: {
         type: String
-    },
-    image: {
-        type: String
-    },
+    }
+    // image: {
+    //     type: String
+    // },
 });
 
 module.exports = mongoose.model('Category', categorySchema)

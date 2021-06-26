@@ -36,6 +36,36 @@ router.get(`/:id`, async (req, res) =>{
     }
 });
 
+router.put(`/:id`, async (req, res) =>{
+    const { id } = req.params;
+    const { name, color, icon } = req.body;
+
+    try {
+        const category = await Category.findByIdAndUpdate(
+            id,
+        {
+            name,
+            icon,
+            color
+        }, { new: true });
+
+        if(!category) {
+            res.status(404).json({
+                success: false,
+                message: 'The category cannot by updated!'
+            });
+        }
+
+        res.status(200).send(category);
+    } catch (error) {
+        console.error(error.name + ': ' + error.message);
+        return res.status(400).json({
+            success: false,
+            error
+        });
+    }
+});
+
 router.post('/', async (req, res) => {
     const { name, icon, color } = req.body;
 

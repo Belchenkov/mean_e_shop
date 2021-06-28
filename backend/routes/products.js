@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 
 const Product = require('../models/product');
@@ -16,6 +17,10 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).send('Invalid Product id!');
+    }
 
     const product = await Product.findById(id)
         .populate('category');
@@ -45,8 +50,11 @@ router.post('/', async (req, res) => {
         isFeatured
     } = req.body;
 
-    const checkCategory = await Category.findById(category);
+    if (!mongoose.isValidObjectId(category)) {
+        return res.status(400).send('Invalid Category id!');
+    }
 
+    const checkCategory = await Category.findById(category);
     if (!checkCategory) {
         return res.status(404).send('Invalid category!');
     }
@@ -87,6 +95,11 @@ router.post('/', async (req, res) => {
 
 router.put(`/:id`, async (req, res) =>{
     const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).send('Invalid Product id!');
+    }
+
     const {
         name,
         description,
@@ -102,8 +115,11 @@ router.put(`/:id`, async (req, res) =>{
     } = req.body;
 
     try {
-        const checkCategory = await Category.findById(category);
+        if (!mongoose.isValidObjectId(category)) {
+            return res.status(400).send('Invalid Category id!');
+        }
 
+        const checkCategory = await Category.findById(category);
         if (!checkCategory) {
             return res.status(404).send('Invalid category!');
         }
@@ -134,6 +150,35 @@ router.put(`/:id`, async (req, res) =>{
         res.status(200).json({
             success: true,
             product
+        });
+    } catch (error) {
+        console.error(error.name + ': ' + error.message);
+        return res.status(400).json({
+            success: false,
+            error
+        });
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).send('Invalid Product id!');
+    }
+
+    try {
+        const product = await Product.findByIdAndRemove(id);
+
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: 'The product is not found!'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'The product is deleted!'
         });
     } catch (error) {
         console.error(error.name + ': ' + error.message);

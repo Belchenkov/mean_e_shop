@@ -13,6 +13,21 @@ router.get('/', async (req, res) => {
     res.send(products);
 });
 
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const product = await Product.findById(id);
+
+    if (!product) {
+        return res.status(404).send('The product is not found!');
+    }
+
+    res.status(200).json({
+        success: true,
+        product
+    });
+});
+
 router.post('/', async (req, res) => {
     const {
         name,
@@ -28,15 +43,10 @@ router.post('/', async (req, res) => {
         isFeatured
     } = req.body;
 
-    try {
-        const checkCategory = await Category.findById(category);
+    const checkCategory = await Category.findById(category);
 
-        if (!checkCategory) {
-            return res.status(404).send('Invalid category!');
-        }
-    } catch (error) {
-        console.log(error);
-        throw new Error(error.message);
+    if (!checkCategory) {
+        return res.status(404).send('Invalid category!');
     }
 
     const product = new Product({

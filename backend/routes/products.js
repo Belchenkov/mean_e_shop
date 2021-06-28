@@ -6,7 +6,16 @@ const Product = require('../models/product');
 const Category = require('../models/category');
 
 router.get('/', async (req, res) => {
-    const products = await Product.find({})
+    let filter = {};
+
+    if (req.query.categories) {
+        filter = {
+            category: req.query.categories.split(',')
+        };
+    }
+
+    const products = await Product
+        .find(filter)
         .populate('category');
 
     if (!products) {

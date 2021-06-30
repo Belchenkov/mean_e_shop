@@ -98,4 +98,62 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.put('/:id', async (req, res) => {
+    const {
+        name,
+        email,
+        password,
+        phone,
+        isAdmin,
+        street,
+        apartment,
+        zip,
+        city,
+        country
+    } = req.body;
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).send('Invalid User id!');
+    }
+
+    try {
+        const userExist = await User.findById(id);
+        const newPassword = !!password ? bcrypt.hashSync(password, 10) : userExist?.passwordHash;
+
+        const user = await User.findByIdAndUpdate(
+            id,
+            {
+            name,
+            email,
+            passwordHash: newPassword,
+            phone,
+            isAdmin,
+            street,
+            apartment,
+            zip,
+            city,
+            country
+        }, { new: true });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'The user cannot be updated!'
+            });
+        }
+
+        res.status(201).json({
+            success: true,
+            user
+        });
+    } catch (error) {
+        console.error(error.name + ': ' + error.message);
+        return res.status(400).json({
+            success: false,
+            error
+        });
+    }
+});
+
 module.exports = router;

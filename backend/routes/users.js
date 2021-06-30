@@ -11,7 +11,10 @@ router.get('/', async (req, res) => {
         .select('-passwordHash');
 
     if (!users) {
-        res.status(500).json({ success: false });
+        res.status(500).json({
+            success: false,
+            message: 'Cannot get list of users!'
+        });
     }
     res.status(200).json({
         success: true,
@@ -23,7 +26,10 @@ router.get(`/:id`, async (req, res) =>{
     const { id } = req.params;
 
     if (!mongoose.isValidObjectId(id)) {
-        return res.status(400).send('Invalid Product id!');
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid Product id!'
+        });
     }
 
     try {
@@ -63,6 +69,15 @@ router.post('/', async (req, res) => {
         city,
         country
     } = req.body;
+
+    const userExist = await User.find({ email });
+
+    if (userExist.length > 0) {
+        return res.status(400).json({
+            success: false,
+            message: 'The user already exists!'
+        });
+    }
 
     try {
         const passwordHash = bcrypt.hashSync(password, 10);

@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose');
+
 const router = express.Router();
 
 const Category = require('../models/category');
@@ -10,11 +12,18 @@ router.get(`/`, async (req, res) =>{
         res.status(500).json({success: false})
     }
 
-    res.status(200).send(categoryList);
+    res.status(200).json({
+        success: true,
+        categoryList
+    });
 });
 
 router.get(`/:id`, async (req, res) =>{
     const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).send('Invalid Product id!');
+    }
 
     try {
         const category = await Category.findById(id);
@@ -40,6 +49,10 @@ router.put(`/:id`, async (req, res) =>{
     const { id } = req.params;
     const { name, color, icon } = req.body;
 
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).send('Invalid Product id!');
+    }
+
     try {
         const category = await Category.findByIdAndUpdate(
             id,
@@ -56,7 +69,10 @@ router.put(`/:id`, async (req, res) =>{
             });
         }
 
-        res.status(200).send(category);
+        res.status(200).json({
+            success: true,
+            category
+        });
     } catch (error) {
         console.error(error.name + ': ' + error.message);
         return res.status(400).json({
@@ -82,7 +98,10 @@ router.post('/', async (req, res) => {
             return res.status(404).send('The category cannot be created!');
         }
 
-        res.send(newCategory);
+        res.status(201).json({
+            success: true,
+            newCategory
+        });
     } catch (error) {
         console.error(error.name + ': ' + error.message);
         return res.status(400).json({
@@ -94,6 +113,10 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).send('Invalid Product id!');
+    }
 
     try {
         const category = await Category.findByIdAndRemove(id);

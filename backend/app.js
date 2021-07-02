@@ -20,8 +20,11 @@ const usersRoutes = require('./routes/users');
 const ordersRoutes = require('./routes/orders');
 
 // middlewares
+const { authJwt } = require('./middleware/auth');
+
 app.use(express.json());
 app.use(morgan('tiny'));
+app.use(authJwt());
 
 // cors
 app.use(cors());

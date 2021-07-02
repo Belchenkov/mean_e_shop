@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
@@ -161,6 +162,47 @@ router.put('/:id', async (req, res) => {
         res.status(201).json({
             success: true,
             user
+        });
+    } catch (error) {
+        console.error(error.name + ': ' + error.message);
+        return res.status(400).json({
+            success: false,
+            error
+        });
+    }
+});
+
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.findOne({
+            email
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'The user is not found!'
+            });
+        }
+
+        if (user && bcrypt.compareSync(password, user.passwordHash)) {
+            const jwtSecret = process.env.JWT_SECRET;
+            const token = jwt.sign({
+               userId: user.id,
+            }, jwtSecret, { expiresIn: '1d' });
+
+            res.status(200).json({
+                success: true,
+                user: user.email,
+                token
+            });
+        }
+
+        res.status(401).json({
+            success: false,
+            message: 'Wrong credentials!'
         });
     } catch (error) {
         console.error(error.name + ': ' + error.message);

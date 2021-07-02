@@ -21,10 +21,12 @@ const ordersRoutes = require('./routes/orders');
 
 // middlewares
 const { authJwt } = require('./middleware/auth');
+const { errorHandler } = require('./middleware/error');
 
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(authJwt());
+app.use(errorHandler);
 
 // cors
 app.use(cors());

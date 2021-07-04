@@ -21,7 +21,10 @@ router.get('/', async (req, res) => {
     if (!products) {
         res.status(500).json({ success: false });
     }
-    res.send(products);
+    res.status(200).json({
+        success: true,
+        products
+    });
 });
 
 router.get('/:id', async (req, res) => {
@@ -171,6 +174,7 @@ router.put(`/:id`, async (req, res) =>{
 
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
+
     if (!mongoose.isValidObjectId(id)) {
         return res.status(400).send('Invalid Product id!');
     }

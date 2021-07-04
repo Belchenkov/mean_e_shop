@@ -190,7 +190,8 @@ router.post('/login', async (req, res) => {
         if (user && bcrypt.compareSync(password, user.passwordHash)) {
             const jwtSecret = process.env.JWT_SECRET;
             const token = jwt.sign({
-               userId: user.id,
+                userId: user.id,
+                isAdmin: user.isAdmin
             }, jwtSecret, { expiresIn: '1d' });
 
             res.status(200).json({
@@ -211,6 +212,49 @@ router.post('/login', async (req, res) => {
             error
         });
     }
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).send('Invalid User id!');
+    }
+
+    try {
+        const user = await User.findByIdAndRemove(id);
+
+        if (! user) {
+            return res.status(404).json({
+                success: false,
+                message: 'The user is not found!'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'The user is deleted!'
+        });
+    } catch (error) {
+        console.error(error.name + ': ' + error.message);
+        return res.status(400).json({
+            success: false,
+            error
+        });
+    }
+});
+
+router.get('/get/count', async (req, res) => {
+    const userCount = await User.countDocuments(count => count);
+
+    if (! userCount) {
+        return res.status(400).send('Cannot return count users!');
+    }
+
+    res.status(200).json({
+        success: true,
+        userCount
+    });
 });
 
 module.exports = router;

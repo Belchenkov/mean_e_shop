@@ -72,11 +72,10 @@ router.post('/', async (req, res) => {
         country,
         phone,
         status,
-        totalPrice,
         user
     } = req.body;
+
     const orderItemsIdsPromise = Promise.all(orderItems.map(async item => {
-        await console.log(item, 'item');
         let newOrderItem = new OrderItem({
             quantity: item.quantity,
             product: item.product
@@ -86,6 +85,23 @@ router.post('/', async (req, res) => {
     }));
 
     const orderItemsIds = await orderItemsIdsPromise;
+
+    const totalPrices = await Promise.all(orderItemsIds.map(async orderItemId => {
+        const orderItem = await OrderItem
+            .findById(orderItemId)
+            .populate('product', 'price');
+
+        if (! orderItem) {
+            return res.status(404).json({
+                success: false,
+                message: 'The orderItem is not found!'
+            });
+        }
+
+        return orderItem.product.price * orderItem.quantity;
+    }));
+
+    const totalPrice = totalPrices.reduce((a, b) => a + b, 0);
 
     try {
         const order = new Order({
@@ -104,7 +120,7 @@ router.post('/', async (req, res) => {
         const newOrder = await order.save();
 
         if (!newOrder) {
-            return res.status(404).send('The order cannot be created!');
+            return res.status(500).send('The order cannot be created!');
         }
 
         res.status(201).json({
@@ -136,7 +152,7 @@ router.put(`/:id`, async (req, res) =>{
         );
 
         if(! order) {
-            return res.status(404).json({
+            return res.status(500).json({
                 success: false,
                 message: 'The order cannot by updated!'
             });
@@ -171,6 +187,10 @@ router.delete('/:id', async (req, res) => {
                 message: 'The order is not found!'
             });
         }
+
+        await order.orderItems.map(async item => {
+           await OrderItem.findByIdAndRemove(item);
+        });
 
         return res.status(200).json({
             success: true,

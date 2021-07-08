@@ -1,11 +1,16 @@
 const express = require('express');
+const mongoose = require("mongoose");
 const router = express.Router();
 
 const Order = require('../models/order');
 const OrderItem = require('../models/orderItem');
 
 router.get(`/`, async (req, res) =>{
-    const orderList = await Order.find();
+    const orderList = await Order.find()
+        .populate('user', 'name')
+        .sort({
+            'dateOrdered': -1
+        });
 
     if (!orderList) {
         res.status(500).json({
@@ -17,6 +22,44 @@ router.get(`/`, async (req, res) =>{
         success: true,
         orderList
     });
+});
+
+router.get(`/:id`, async (req, res) => {
+    const { id } = req.params;
+
+    if (! mongoose.isValidObjectId(id)) {
+        return res.status(400).send('Invalid Order id!');
+    }
+
+    try {
+        const order = await Order.findById(id)
+            .populate('user', 'name')
+            .populate({
+                path: 'orderItems',
+                populate: {
+                    path: 'product',
+                    populate: 'category'
+                }
+            });
+
+        if (! order) {
+            res.status(404).json({
+                success: false,
+                message: 'The order is not found!'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            order
+        });
+    } catch (error) {
+        console.error(error.name + ': ' + error.message);
+        return res.status(400).json({
+            success: false,
+            error
+        });
+    }
 });
 
 router.post('/', async (req, res) => {

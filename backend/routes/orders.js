@@ -120,4 +120,69 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.put(`/:id`, async (req, res) =>{
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (! mongoose.isValidObjectId(id)) {
+        return res.status(400).send('Invalid Order id!');
+    }
+
+    try {
+        const order = await Order.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true }
+        );
+
+        if(! order) {
+            return res.status(404).json({
+                success: false,
+                message: 'The order cannot by updated!'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            order
+        });
+    } catch (error) {
+        console.error(error.name + ': ' + error.message);
+        return res.status(400).json({
+            success: false,
+            error
+        });
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).send('Invalid Order id!');
+    }
+
+    try {
+        const order = await Order.findByIdAndRemove(id);
+
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: 'The order is not found!'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'The order is deleted!'
+        });
+    } catch (error) {
+        console.error(error.name + ': ' + error.message);
+        return res.status(400).json({
+            success: false,
+            error
+        });
+    }
+});
+
 module.exports =router;

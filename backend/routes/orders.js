@@ -243,4 +243,36 @@ router.get('/get/count', async (req, res) => {
     });
 });
 
+router.get(`/get/user-orders/:userId`, async (req, res) =>{
+    const { userId } = req.params;
+
+    if (!mongoose.isValidObjectId(userId)) {
+        return res.status(400).send('Invalid User ID!');
+    }
+
+    const userOrderList = await Order.find({ user: userId })
+        .populate({
+            path: 'orderItems',
+            populate: {
+                path: 'product',
+                populate: 'category'
+            }
+        })
+        .sort({
+            'dateOrdered': -1
+        });
+
+    if (! userOrderList) {
+        res.status(400).json({
+            success: false,
+            message: 'Cannot get list orders of user!'
+        });
+    }
+
+    res.status(200).json({
+        success: true,
+        userOrderList
+    });
+});
+
 module.exports = router;

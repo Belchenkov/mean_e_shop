@@ -138,7 +138,7 @@ router.post('/', uploadOptions.single('image'), async (req, res) => {
     }
 });
 
-router.put(`/:id`, async (req, res) =>{
+router.put(`/:id`, uploadOptions.single('image'), async (req, res) =>{
     const { id } = req.params;
 
     if (!mongoose.isValidObjectId(id)) {
@@ -149,7 +149,6 @@ router.put(`/:id`, async (req, res) =>{
         name,
         description,
         richDescription,
-        image,
         brand,
         price,
         category,
@@ -158,6 +157,7 @@ router.put(`/:id`, async (req, res) =>{
         numReview,
         isFeatured
     } = req.body;
+    const { file } = req;
 
     try {
         if (!mongoose.isValidObjectId(category)) {
@@ -169,13 +169,26 @@ router.put(`/:id`, async (req, res) =>{
             return res.status(404).send('Invalid category!');
         }
 
-        const product = await Product.findByIdAndUpdate(
+        const product = await Product.findById(id);
+        if (! product) {
+            return res.status(404).send('Invalid product!');
+        }
+
+        let imagePath = product.image;
+
+        if (file) {
+            const fileName = req.file.filename;
+            const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+            imagePath = `${basePath}${fileName}`;
+        }
+
+        const updatedProduct = await Product.findByIdAndUpdate(
             id,
             {
                 name,
                 description,
                 richDescription,
-                image,
+                image: imagePath,
                 brand,
                 price,
                 category,
@@ -185,7 +198,7 @@ router.put(`/:id`, async (req, res) =>{
                 isFeatured
             }, { new: true });
 
-        if(!product) {
+        if(! updatedProduct) {
             res.status(404).json({
                 success: false,
                 message: 'The product cannot by updated!'
@@ -194,7 +207,7 @@ router.put(`/:id`, async (req, res) =>{
 
         res.status(200).json({
             success: true,
-            product
+            updatedProduct
         });
     } catch (error) {
         console.error(error.name + ': ' + error.message);
@@ -284,20 +297,28 @@ router.put(
             files.map(file => imagesPaths.push(`${basePath}${file.filename}`))
         }
 
-        const product = await Product.findByIdAndUpdate(
-            id,
-            { images: imagesPaths },
-            { new: true }
-        );
+        try {
+            const product = await Product.findByIdAndUpdate(
+                id,
+                { images: imagesPaths },
+                { new: true }
+            );
 
-        if (! product) {
-            return res.status(400).send('Cannot update product!');
+            if (! product) {
+                return res.status(400).send('Cannot update product!');
+            }
+
+            res.status(200).json({
+                success: true,
+                product
+            });
+        } catch (error) {
+            console.error(error.name + ': ' + error.message);
+            return res.status(400).json({
+                success: false,
+                error
+            });
         }
-
-        res.status(200).json({
-            success: true,
-            product
-        });
 });
 
 module.exports = router;

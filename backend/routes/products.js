@@ -86,7 +86,13 @@ router.post('/', uploadOptions.single('image'), async (req, res) => {
         numReview,
         isFeatured
     } = req.body;
-    const { fileName } = req.file;
+    const file = req.file;
+
+    if (! file) {
+        return res.status(400).send('No image in the request!');
+    }
+
+    const fileName = req.file.filename;
     const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
 
     if (!mongoose.isValidObjectId(category)) {

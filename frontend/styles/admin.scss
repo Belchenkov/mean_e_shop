@@ -1,4 +1,15 @@
+// Base
 @import "./base/colors";
 @import "./base/fonts";
 @import "./base/mixins";
 @import "./base/configuration";
+
+// Libs
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/themes/saga-green/theme.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~primeflex/primeflex.css";
+
+// Libs
+@import './libs/ui/ui';
+

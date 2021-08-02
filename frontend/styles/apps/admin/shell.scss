@@ -7,7 +7,7 @@
 
   &-main {
     width: calc(100% - 250px);
-    margin-left: 175px;
+    margin-left: 250px;
   }
 
   &-sidebar {
@@ -66,5 +66,8 @@
         }
       }
     }
+  }
+  &-page {
+    padding: 20px;
   }
 }

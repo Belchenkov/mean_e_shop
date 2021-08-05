@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { ShellComponent } from './shared/shell/shell.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { CategoriesListComponent } from './categories/categories-list/categories-list.component';
 import { CardModule } from 'primeng/card';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { CategoriesService } from '@frontend/products';
+
+import { AppComponent } from './app.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ShellComponent } from './shared/shell/shell.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { CategoriesListComponent } from './categories/categories-list/categories-list.component';
 
 const UX_MODULE = [
   CardModule,
@@ -46,10 +48,13 @@ const routes: Routes = [
     ],
     imports: [
       BrowserModule,
+      HttpClientModule,
       RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
       ...UX_MODULE
     ],
-    providers: [],
+    providers: [
+      CategoriesService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Category } from '../models/category';
+import { CategoriesListResponse } from '../models/categories-list-response';
 import { environment } from '../../../../../apps/admin/src/environments/environment';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class CategoriesService {
     private http: HttpClient
   ) { }
 
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.api}/categories`);
+  getCategories(): Observable<CategoriesListResponse> {
+    return this.http.get<CategoriesListResponse>(`${this.api}/categories`);
   }
 }

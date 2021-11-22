@@ -9,8 +9,9 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { AppComponent } from './app.component';
 import { CategoriesService } from '@frontend/products';
@@ -27,6 +28,7 @@ const UX_MODULE = [
   TableModule,
   InputTextModule,
   ToastModule,
+  ConfirmDialogModule,
 ];
 
 const routes: Routes = [
@@ -70,7 +72,8 @@ const routes: Routes = [
   ],
     providers: [
       CategoriesService,
-      MessageService
+      MessageService,
+      ConfirmationService,
     ],
     bootstrap: [AppComponent]
 })

@@ -8,6 +8,9 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { CategoriesService } from '@frontend/products';
@@ -23,6 +26,7 @@ const UX_MODULE = [
   ButtonModule,
   TableModule,
   InputTextModule,
+  ToastModule,
 ];
 
 const routes: Routes = [
@@ -58,13 +62,15 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
     ...UX_MODULE,
     InputTextModule
   ],
     providers: [
-      CategoriesService
+      CategoriesService,
+      MessageService
     ],
     bootstrap: [AppComponent]
 })

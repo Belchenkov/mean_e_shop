@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { Location } from '@angular/common';
+import { timer } from 'rxjs';
+
+import { CategoriesService, Category } from '@frontend/products';
 
 @Component({
   selector: 'frontend-categories-form',
@@ -13,6 +18,9 @@ export class CategoriesFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private categoriesService: CategoriesService,
+    private messageService: MessageService,
+    private location: Location,
   ) { }
 
   ngOnInit(): void {
@@ -32,7 +40,27 @@ export class CategoriesFormComponent implements OnInit {
     this.isSubmitted = true;
     if (this.form.invalid) return;
 
+    const category: Category = {
+      name: this.categoryForm.name.value,
+      icon: this.categoryForm.icon.value,
+    };
 
+    this.categoriesService.createCategory(category)
+      .subscribe(() => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success!',
+          detail: 'Category is created!'
+        });
+        timer(2000)
+          .toPromise()
+          .then(() => this.location.back())
+      }, (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error!',
+          detail: error.message
+        });
+      })
   }
-
 }

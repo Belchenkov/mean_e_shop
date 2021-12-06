@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 import { CategoriesListResponse } from '@frontend/products';
 import { Category } from '@frontend/products';
@@ -8,8 +9,7 @@ import { CategoriesService } from '@frontend/products';
 @Component({
   selector: 'admin-categories-list',
   templateUrl: './categories-list.component.html',
-  styles: [
-  ]
+  styles: []
 })
 export class CategoriesListComponent implements OnInit {
   categories: Category[] = [];
@@ -18,6 +18,7 @@ export class CategoriesListComponent implements OnInit {
     private categoryService: CategoriesService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -48,6 +49,10 @@ export class CategoriesListComponent implements OnInit {
       },
       reject: () => {}
     });
+  }
+
+  updateCategory(categoryId: string): void {
+    this.router.navigateByUrl(`categories/form/${categoryId}`);
   }
 
   private _getCategories() {

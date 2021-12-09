@@ -28,7 +28,7 @@ router.get(`/:id`, async (req, res) =>{
     try {
         const category = await Category.findById(id);
 
-        if(!category) {
+        if (!category) {
             res.status(404).json({
                 success: false,
                 message: 'The category is not found!'

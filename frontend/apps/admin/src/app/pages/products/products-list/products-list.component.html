@@ -46,7 +46,7 @@
               <td>{{ product.price }}</td>
               <td>{{ product.countInStock }}</td>
               <td>{{ product.category.name }}</td>
-              <td>{{ product.dateCreated }}</td>
+              <td>{{ product.dateCreated | date: 'short' }}</td>
               <td>
                 <p-button
                   styleClass='p-button-warning'

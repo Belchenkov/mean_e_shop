@@ -23,6 +23,7 @@ import { CategoriesListComponent } from './pages/categories/categories-list/cate
 import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
 import { ProductsListComponent } from './pages/products/products-list/products-list.component';
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
+import { ProductsService } from '../../../../libs/products/src/lib/services/products.service';
 
 const UX_MODULE = [
   CardModule,
@@ -94,6 +95,7 @@ const routes: Routes = [
   ],
     providers: [
       CategoriesService,
+      ProductsService,
       MessageService,
       ConfirmationService,
     ],

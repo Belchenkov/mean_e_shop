@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { CategoriesListResponse } from '../models/categories-list-response';
-import { environment } from '../../../../../apps/admin/src/environments/environment';
 import { Category } from '../models/category';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'

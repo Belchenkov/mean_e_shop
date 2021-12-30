@@ -12,14 +12,15 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ColorPickerModule } from 'primeng/colorpicker';
 
 import { AppComponent } from './app.component';
 import { CategoriesService } from '@frontend/products';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ShellComponent } from './shared/shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { CategoriesListComponent } from './categories/categories-list/categories-list.component';
-import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
+import { CategoriesListComponent } from './pages/categories/categories-list/categories-list.component';
+import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
 
 const UX_MODULE = [
   CardModule,
@@ -28,6 +29,7 @@ const UX_MODULE = [
   TableModule,
   InputTextModule,
   ToastModule,
+  ColorPickerModule,
   ConfirmDialogModule,
 ];
 

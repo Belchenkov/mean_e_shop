@@ -1,6 +1,6 @@
 import { Category } from './category';
 
 export interface CategoriesListResponse {
-  status: boolean;
+  success: boolean;
   categoryList: Category[]
 }

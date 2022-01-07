@@ -5,7 +5,12 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
 
-import { ProductsService, Product } from '@frontend/products';
+import {
+  ProductsService,
+  Product,
+  Category,
+  CategoriesService, CategoriesListResponse
+} from '@frontend/products';
 
 @Component({
   selector: 'frontend-products-form',
@@ -18,10 +23,12 @@ export class ProductsFormComponent implements OnInit {
   isSubmitted: boolean = false;
   editMode: boolean = false;
   currentProductId: string;
+  categories: Category[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductsService,
+    private categoryService: CategoriesService,
     private messageService: MessageService,
     private location: Location,
     private route: ActivatedRoute,
@@ -34,6 +41,7 @@ export class ProductsFormComponent implements OnInit {
   ngOnInit(): void {
     this._initForm();
     this._checkEditMode();
+    this._getCategories();
   }
 
 
@@ -122,5 +130,14 @@ export class ProductsFormComponent implements OnInit {
           detail: error.message
         });
       })
+  }
+
+  private _getCategories() {
+    this.categoryService.getCategories()
+      .subscribe((res: CategoriesListResponse) => {
+        if (res.success) {
+          this.categories = res.categoryList;
+        }
+      });
   }
 }

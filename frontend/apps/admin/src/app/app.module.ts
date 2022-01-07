@@ -13,9 +13,13 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 import { AppComponent } from './app.component';
 import { CategoriesService } from '@frontend/products';
+import { ProductsService } from '@frontend/products';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ShellComponent } from './shared/shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -23,7 +27,6 @@ import { CategoriesListComponent } from './pages/categories/categories-list/cate
 import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
 import { ProductsListComponent } from './pages/products/products-list/products-list.component';
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
-import { ProductsService } from '../../../../libs/products/src/lib/services/products.service';
 
 const UX_MODULE = [
   CardModule,
@@ -34,6 +37,9 @@ const UX_MODULE = [
   ToastModule,
   ColorPickerModule,
   ConfirmDialogModule,
+  InputNumberModule,
+  InputTextareaModule,
+  InputSwitchModule,
 ];
 
 const routes: Routes = [

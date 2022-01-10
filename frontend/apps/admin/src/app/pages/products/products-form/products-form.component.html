@@ -130,7 +130,23 @@
                 [style]="{'height':'320px'}"
               ></p-editor>
             </div>
-
+            <div class="p-field p-col-12">
+              <label for="image">Image</label>
+              <input
+                id='image'
+                type='file'
+                accept='image/*'
+                class='p-inputtext'
+                (change)='onImageUpload($event)'
+              />
+            </div>
+            <div class='p-col-2 p-mt-2 p-pl-0'>
+              <img
+                style='width: 100%'
+                [src]='imageDisplay'
+                alt=''
+              />
+            </div>
           </div>
         </form>
       </div>

@@ -52,16 +52,16 @@ export class ProductsFormComponent implements OnInit {
     this.isSubmitted = true;
     if (this.form.invalid) return;
 
-    const product: Product = {
-      id: this.currentProductId,
-      name: this.productForm.name.value,
-      brand: this.productForm.brand.value,
-    };
+    const productFormData = new FormData();
+
+    Object.keys(this.productForm).map((key: string) => {
+      productFormData.append(key, this.productForm[key].value);
+    });
 
     if (this.editMode) {
-      this._updateProduct(product);
+      this._updateProduct(productFormData);
     } else {
-      this._addProduct(product);
+      this._addProduct(productFormData);
     }
   }
 
@@ -75,6 +75,8 @@ export class ProductsFormComponent implements OnInit {
         this.imageDisplay = fileReader.result;
       };
       fileReader.readAsDataURL(file);
+      this.form.patchValue({ image: file });
+      this.form.get('image')?.updateValueAndValidity();
     }
   }
 
@@ -106,33 +108,33 @@ export class ProductsFormComponent implements OnInit {
     });
   }
 
-  private _updateProduct(product: Product): void {
-    this.productService.updateProduct(product)
-      .subscribe(() => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success!',
-          detail: `Category ${product.name} is updated!`
-        });
-        timer(2000)
-          .toPromise()
-          .then(() => this.location.back())
-      }, (error) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error!',
-          detail: error.message
-        });
-      })
+  private _updateProduct(product: FormData): void {
+    // this.productService.updateProduct(product)
+    //   .subscribe(() => {
+    //     this.messageService.add({
+    //       severity: 'success',
+    //       summary: 'Success!',
+    //       detail: `Category ${product.name} is updated!`
+    //     });
+    //     timer(2000)
+    //       .toPromise()
+    //       .then(() => this.location.back())
+    //   }, (error) => {
+    //     this.messageService.add({
+    //       severity: 'error',
+    //       summary: 'Error!',
+    //       detail: error.message
+    //     });
+    //   })
   }
 
-  private _addProduct(product: Product): void {
-    this.productService.createProduct(product)
+  private _addProduct(productData: FormData): void {
+    this.productService.createProduct(productData)
       .subscribe(() => {
         this.messageService.add({
           severity: 'success',
           summary: 'Success!',
-          detail: `Category ${product.name} is created!`
+          // detail: `Product ${productData.name} is created!`
         });
         timer(2000)
           .toPromise()

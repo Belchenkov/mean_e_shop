@@ -141,6 +141,10 @@
                 class='p-inputtext'
                 (change)='onImageUpload($event)'
               />
+              <small
+                *ngIf='productForm.image.invalid && isSubmitted'
+                class='p-error'
+              >Image is required</small>
             </div>
             <div class='p-col-2 p-mt-2 p-pl-0'>
               <img

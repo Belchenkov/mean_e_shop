@@ -7,10 +7,10 @@ import { timer } from 'rxjs';
 
 import {
   ProductsService,
-  Product,
   Category,
-  CategoriesService, CategoriesListResponse
+  CategoriesService, CategoriesListResponse, Product
 } from '@frontend/products';
+import { IProductItemResponse } from '../../../../../../../libs/products/src/lib/models/product-item-response';
 
 @Component({
   selector: 'frontend-products-form',
@@ -23,7 +23,7 @@ export class ProductsFormComponent implements OnInit {
   isSubmitted: boolean = false;
   editMode: boolean = false;
   currentProductId: string;
-  imageDisplay: string | ArrayBuffer | null;
+  imageDisplay: string | ArrayBuffer | null | undefined;
   categories: Category[] = [];
 
   constructor(
@@ -100,32 +100,43 @@ export class ProductsFormComponent implements OnInit {
         this.editMode = true;
         this.currentProductId = params.id;
         this.productService.getProduct(this.currentProductId)
-          .subscribe((product: Product) => {
-            this.productForm.name.setValue(product.name);
-            this.productForm.brand.setValue(product.brand);
+          .subscribe((res: IProductItemResponse) => {
+            if (res.success) {
+              this.productForm.name.setValue(res.product.name);
+              this.productForm.brand.setValue(res.product.brand);
+              this.productForm.category.setValue(res.product.category?.id);
+              this.productForm.price.setValue(res.product.price);
+              this.productForm.countInStock.setValue(res.product.countInStock);
+              this.productForm.isFeatured.setValue(res.product.isFeatured);
+              this.productForm.description.setValue(res.product.description);
+              this.productForm.richDescription.setValue(res.product.richDescription);
+              this.imageDisplay = res.product.image;
+            }
           });
       }
     });
   }
 
   private _updateProduct(product: FormData): void {
-    // this.productService.updateProduct(product)
-    //   .subscribe(() => {
-    //     this.messageService.add({
-    //       severity: 'success',
-    //       summary: 'Success!',
-    //       detail: `Category ${product.name} is updated!`
-    //     });
-    //     timer(2000)
-    //       .toPromise()
-    //       .then(() => this.location.back())
-    //   }, (error) => {
-    //     this.messageService.add({
-    //       severity: 'error',
-    //       summary: 'Error!',
-    //       detail: error.message
-    //     });
-    //   })
+    this.productService.updateProduct(product, this.currentProductId)
+      .subscribe((res: IProductItemResponse) => {
+        if (res.success) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success!',
+            detail: `Product is updated!`
+          });
+          timer(2000)
+            .toPromise()
+            .then(() => this.location.back())
+        }
+      }, (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error!',
+          detail: error.message
+        });
+      })
   }
 
   private _addProduct(productData: FormData): void {

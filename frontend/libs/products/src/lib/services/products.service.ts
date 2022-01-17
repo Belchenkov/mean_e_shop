@@ -33,7 +33,7 @@ export class ProductsService {
     return this.http.put<IProductItemResponse>(`${this.api}${id}`, product);
   }
 
-  deleteProduct(productId: string): Observable<Object> {
-    return this.http.delete<Object>(`${this.api}${productId}`);
+  deleteProduct(productId: string): Observable<IProductItemResponse> {
+    return this.http.delete<IProductItemResponse>(`${this.api}${productId}`);
   }
 }

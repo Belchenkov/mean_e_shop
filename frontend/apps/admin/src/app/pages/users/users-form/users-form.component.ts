@@ -4,9 +4,12 @@ import { MessageService } from 'primeng/api';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { timer } from 'rxjs';
+import * as countriesLib from 'i18n-iso-countries';
 
 import { IUser, UsersService } from '@frontend/users';
 import { IUsersItemResponse } from '../../../../../../../libs/users/src/lib/models/users-item-response';
+
+declare const require: (arg0: string) => countriesLib.LocaleData;
 
 @Component({
   selector: 'frontend-users-form',
@@ -18,7 +21,7 @@ export class UsersFormComponent implements OnInit {
   isSubmitted: boolean = false;
   editMode: boolean = false;
   currentUserId: string;
-  countries: Array<string> = [];
+  countries: { name: string; id: string }[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,6 +33,7 @@ export class UsersFormComponent implements OnInit {
 
   ngOnInit(): void {
     this._initUserForm();
+    this._getCountries();
     this._checkEditMode();
   }
 
@@ -134,5 +138,16 @@ export class UsersFormComponent implements OnInit {
           detail: error.message
         });
       })
+  }
+
+  private _getCountries() {
+    countriesLib.registerLocale(require('i18n-iso-countries/langs/en.json'));
+    this.countries = Object.entries(countriesLib.getNames('en', { select: 'official' }))
+      .map(entry => {
+        return {
+          id: entry[0],
+          name: entry[1],
+        }
+      });
   }
 }

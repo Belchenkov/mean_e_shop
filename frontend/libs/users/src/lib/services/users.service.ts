@@ -26,7 +26,8 @@ export class UsersService {
   }
 
   createUser(userData: IUser): Observable<IUsersItemResponse> {
-    return this.http.post<IUsersItemResponse>(`${this.api}`, userData);
+    console.log(userData);
+    return this.http.post<IUsersItemResponse>(`${this.api}/register`, userData);
   }
 
   updateUser(user: IUser): Observable<IUsersItemResponse> {

@@ -11,14 +11,14 @@ import { IUsersItemResponse } from '../../../../../../../libs/users/src/lib/mode
 @Component({
   selector: 'frontend-users-form',
   templateUrl: './users-form.component.html',
-  styles: [
-  ]
+  styles: []
 })
 export class UsersFormComponent implements OnInit {
   form: FormGroup;
   isSubmitted: boolean = false;
   editMode: boolean = false;
   currentUserId: string;
+  countries: Array<string> = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,9 +29,7 @@ export class UsersFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      name: ['', Validators.required],
-    });
+    this._initUserForm();
     this._checkEditMode();
   }
 
@@ -48,6 +46,8 @@ export class UsersFormComponent implements OnInit {
     const user: IUser = {
       id: this.currentUserId,
       name: this.userForm.name.value,
+      password: this.userForm.password.value,
+      email: this.userForm.email.value,
     };
 
     if (this.editMode) {
@@ -55,6 +55,21 @@ export class UsersFormComponent implements OnInit {
     } else {
       this._addUser(user);
     }
+  }
+
+  private _initUserForm() {
+    this.form = this.formBuilder.group({
+      name: ['', Validators.required],
+      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      isAdmin: [false],
+      street: [''],
+      apartment: [''],
+      zip: [''],
+      city: [''],
+      country: [''],
+    });
   }
 
   private _checkEditMode(): void {
@@ -66,6 +81,15 @@ export class UsersFormComponent implements OnInit {
           .subscribe((res: IUsersItemResponse) => {
             if (res.success) {
               this.userForm.name.setValue(res.user.name);
+              this.userForm.email.setValue(res.user.email);
+              this.userForm.isAdmin.setValue(res.user.isAdmin);
+              this.userForm.street.setValue(res.user.street);
+              this.userForm.apartment.setValue(res.user.apartment);
+              this.userForm.zip.setValue(res.user.zip);
+              this.userForm.city.setValue(res.user.city);
+              this.userForm.country.setValue(res.user.country);
+              this.userForm.password.setValidators([]);
+              this.userForm.password.updateValueAndValidity();
             }
           });
       }

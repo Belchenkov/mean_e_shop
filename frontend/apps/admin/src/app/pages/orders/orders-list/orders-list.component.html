@@ -19,13 +19,13 @@
           </ng-template>
           <ng-template pTemplate="body" let-order>
             <tr>
-              <td>{{ order.user.name }}</td>
+              <td>{{ order.user ? order.user.name : 'None' }}</td>
               <td>{{ order.totalPrice }}</td>
               <td>{{ order.dateOrdered | date: 'short' }}</td>
               <td>
                 <p-tag
-                  [value]="orderStatus[order.status].label"
-                  [severity]="orderStatus[order.status].color"
+                  [value]="orderStatus[2].label"
+                  [severity]="orderStatus[2].color"
                 ></p-tag>
               </td>
               <td>

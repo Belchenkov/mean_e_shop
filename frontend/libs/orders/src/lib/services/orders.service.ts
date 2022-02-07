@@ -4,17 +4,18 @@ import { Observable } from 'rxjs';
 
 import { Order } from '../models/order';
 import { environment } from '@env/environment';
+import { IOrdersListResponse } from '../models/orders-list-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersService {
-  apiURLOrders = environment.apiUrl + 'orders';
+  apiURLOrders = environment.apiUrl + '/orders';
 
   constructor(private http: HttpClient) {}
 
-  getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.apiURLOrders);
+  getOrders(): Observable<IOrdersListResponse> {
+    return this.http.get<IOrdersListResponse>(this.apiURLOrders);
   }
 
   getOrder(orderId: string): Observable<Order> {

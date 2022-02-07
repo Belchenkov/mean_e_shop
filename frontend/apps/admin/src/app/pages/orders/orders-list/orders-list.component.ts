@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { ORDER_STATUS } from '../order.constants';
 import { Order, OrdersService } from '@frontend/orders';
+import { IOrdersListResponse } from '../../../../../../../libs/orders/src/lib/models/orders-list-response';
 
 @Component({
   selector: 'admin-orders-list',
@@ -58,9 +59,12 @@ export class OrdersListComponent implements OnInit {
   }
 
   private _getOrders() {
-    this.ordersService.getOrders().subscribe((orders) => {
-      this.orders = orders;
+    this.ordersService.getOrders()
+      .subscribe((res: IOrdersListResponse) => {
+        if (res.success) {
+          this.orders = res.orderList;
+          console.log(this.orders);
+        }
     });
   }
-
 }

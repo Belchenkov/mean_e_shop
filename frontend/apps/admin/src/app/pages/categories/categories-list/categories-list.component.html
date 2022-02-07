@@ -17,7 +17,11 @@
     </div>
     <div class='p-grid'>
       <div class='p-col-12'>
-        <p-table [value]='categories' styleClass='p-datatable-gridlines'>
+        <p-table
+          [paginator]='true'
+          [rows]='10'
+          [value]='categories' styleClass='p-datatable-gridlines'
+        >
           <ng-template pTemplate='header'>
             <tr>
               <th pSortableColumn='name'>

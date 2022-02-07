@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Product } from '../models/product';
 import { ProductsListResponse } from '../models/products-list-response';
 import { environment } from '@env/environment';
+import { IProductItemResponse } from '../models/product-item-response';
 
 @Injectable({
   providedIn: 'root'
@@ -20,16 +21,16 @@ export class ProductsService {
     return this.http.get<ProductsListResponse>(`${this.api}`);
   }
 
-  getProduct(productId: string): Observable<Product> {
-    return this.http.get<Product>(`${this.api}${productId}`);
+  getProduct(productId: string): Observable<IProductItemResponse> {
+    return this.http.get<IProductItemResponse>(`${this.api}${productId}`);
   }
 
-  createProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(`${this.api}`, product);
+  createProduct(productData: FormData): Observable<Product> {
+    return this.http.post<Product>(`${this.api}`, productData);
   }
 
-  updateProduct(product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.api}${product.id}`, product);
+  updateProduct(product: FormData, id: string): Observable<IProductItemResponse> {
+    return this.http.put<IProductItemResponse>(`${this.api}${id}`, product);
   }
 
   deleteProduct(productId: string): Observable<Object> {

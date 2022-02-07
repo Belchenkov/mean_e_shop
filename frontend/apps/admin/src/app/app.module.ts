@@ -20,6 +20,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { EditorModule } from 'primeng/editor';
 import { TagModule } from 'primeng/tag';
 import { InputMaskModule } from 'primeng/inputmask';
+import { FieldsetModule } from 'primeng/fieldset';
 
 import { AppComponent } from './app.component';
 import { CategoriesService } from '@frontend/products';
@@ -52,6 +53,7 @@ const UX_MODULE = [
   DropdownModule,
   EditorModule,
   TagModule,
+  FieldsetModule,
   InputMaskModule,
 ];
 
@@ -103,6 +105,10 @@ const routes: Routes = [
       {
         path: 'orders',
         component: OrdersListComponent
+      },
+      {
+        path: 'orders/:id',
+        component: OrdersDetailComponent
       },
     ]
   }

@@ -63,7 +63,6 @@ export class OrdersListComponent implements OnInit {
       .subscribe((res: IOrdersListResponse) => {
         if (res.success) {
           this.orders = res.orderList;
-          console.log(this.orders);
         }
     });
   }

@@ -3,7 +3,7 @@ import { IUser } from '@frontend/users';
 
 export class Order {
   id?: string;
-  orderItems?: OrderItem;
+  orderItems?: OrderItem | undefined;
   shippingAddress1?: string;
   shippingAddress2?: string;
   city?: string;

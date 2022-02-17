@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -20,6 +20,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { EditorModule } from 'primeng/editor';
 import { TagModule } from 'primeng/tag';
 import { InputMaskModule } from 'primeng/inputmask';
+import { FieldsetModule } from 'primeng/fieldset';
 
 import { AppComponent } from './app.component';
 import { CategoriesService } from '@frontend/products';
@@ -34,6 +35,8 @@ import { ProductsListComponent } from './pages/products/products-list/products-l
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
 import { UsersListComponent } from './pages/users/users-list/users-list.component';
 import { UsersFormComponent } from './pages/users/users-form/users-form.component';
+import { OrdersListComponent } from './pages/orders/orders-list/orders-list.component';
+import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 
 const UX_MODULE = [
   CardModule,
@@ -50,6 +53,7 @@ const UX_MODULE = [
   DropdownModule,
   EditorModule,
   TagModule,
+  FieldsetModule,
   InputMaskModule,
 ];
 
@@ -97,7 +101,15 @@ const routes: Routes = [
       {
         path: 'users/form/:id',
         component: UsersFormComponent
-      }
+      },
+      {
+        path: 'orders',
+        component: OrdersListComponent
+      },
+      {
+        path: 'orders/:id',
+        component: OrdersDetailComponent
+      },
     ]
   }
 ]
@@ -114,6 +126,8 @@ const routes: Routes = [
       ProductsFormComponent,
       UsersFormComponent,
       UsersListComponent,
+      OrdersListComponent,
+      OrdersDetailComponent,
     ],
   imports: [
     BrowserModule,
@@ -122,7 +136,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
     ...UX_MODULE,
-    InputTextModule
+    InputTextModule,
+    FormsModule
   ],
     providers: [
       CategoriesService,

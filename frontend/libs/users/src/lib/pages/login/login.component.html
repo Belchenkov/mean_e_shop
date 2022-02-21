@@ -1,0 +1,65 @@
+<div class='login-register'>
+  <div class='login-register-panel'>
+    <div class='p-grid'>
+      <div class='p-col-6'>
+        <img src='./assets/images/login-photo.jpg' alt='Login Photo'>
+      </div>
+      <div class='p-col-6 p-p-5'>
+        <h3>Welcome!</h3>
+        <h2>Login Page</h2>
+
+        <form [formGroup]='loginFormGroup'>
+          <div class='p-grid p-mt-6'>
+            <div class='p-col-12'>
+              <div class='p-inputgroup'>
+                <span class='p-inputgroup-addon'>
+                  <i class='pi pi-user'></i>
+                </span>
+                <input
+                  formControlName='email'
+                  type='email'
+                  pInputText
+                  placeholder='Email'
+                >
+              </div>
+              <small
+                *ngIf='loginForm.email.invalid && isSubmitted'
+                class='p-error'
+              >
+                <span *ngIf='loginForm.email.errors?.required'>Email is required</span>
+                <span *ngIf='loginForm.email.errors?.email'>Email is invalid</span>
+              </small>
+            </div>
+            <div class='p-col-12'>
+              <div class='p-inputgroup'>
+                <span class='p-inputgroup-addon'>
+                  <i class='pi pi-lock'></i>
+                </span>
+                <input
+                  formControlName='email'
+                  type='password'
+                  pInputText
+                  placeholder='Password'
+                >
+              </div>
+              <small
+                *ngIf='loginForm.password.invalid && isSubmitted'
+                class='p-error'
+              >
+                <span *ngIf='loginForm.password.errors?.required'>Password is required</span>
+              </small>
+            </div>
+            <div class='p-col-12 p-mt-3'>
+              <button pButton type="button"
+                style='width: 100%'
+                class="p-button-raised p-button-rounded p-button-info"
+                label='Submit'
+                (click)='onSubmit()'
+              ></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

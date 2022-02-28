@@ -25,7 +25,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { AppComponent } from './app.component';
 import { CategoriesService } from '@frontend/products';
 import { ProductsService } from '@frontend/products';
-import { UsersService } from '@frontend/users';
+import { UsersModule, UsersService } from '@frontend/users';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ShellComponent } from './shared/shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -137,7 +137,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { initialNavigation: 'enabled' }),
     ...UX_MODULE,
     InputTextModule,
-    FormsModule
+    FormsModule,
+    UsersModule,
   ],
     providers: [
       CategoriesService,

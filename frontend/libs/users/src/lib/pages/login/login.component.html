@@ -8,7 +8,7 @@
         <h3>Welcome!</h3>
         <h2>Login Page</h2>
 
-        <form [formGroup]='loginFormGroup'>
+        <form [formGroup]='loginFormGroup' (ngSubmit)='onSubmit()'>
           <div class='p-grid p-mt-6'>
             <div class='p-col-12'>
               <div class='p-inputgroup'>
@@ -36,7 +36,7 @@
                   <i class='pi pi-lock'></i>
                 </span>
                 <input
-                  formControlName='email'
+                  formControlName='password'
                   type='password'
                   pInputText
                   placeholder='Password'
@@ -56,6 +56,9 @@
                 label='Submit'
                 (click)='onSubmit()'
               ></button>
+            </div>
+            <div class='p-col-12' *ngIf='isSubmitted && authError'>
+              <small class='p-error'>{{ authMessage }}</small>
             </div>
           </div>
         </form>

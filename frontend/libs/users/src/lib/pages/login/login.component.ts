@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IAuthLoginResponse } from '../../models/auth-login-response';
+import { LocalstorageService } from '../../services/localstorage.service';
 
 @Component({
   selector: 'users-login',
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private localstorageService: LocalstorageService,
   ) { }
 
   get loginForm() {
@@ -51,7 +53,7 @@ export class LoginComponent implements OnInit {
       .subscribe((res: IAuthLoginResponse) => {
         if (res.success) {
           this.authError = false;
-          console.log(res.token);
+          this.localstorageService.setToken(res.token);
         }
       },
         (error: HttpErrorResponse) => {

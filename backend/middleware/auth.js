@@ -10,18 +10,8 @@ const authJwt = () => {
         isRevoked
     }).unless({
         path: [
-            {
-                url: `${api}/users/login`,
-                methods: [
-                    'POST'
-                ]
-            },
-            {
-                url: `${api}/users/register`,
-                methods: [
-                    'POST'
-                ]
-            },
+            `${api}/users/login`,
+            `${api}/users/register`,
             {
                 url: /\/public\/uploads(.*)/,
                 methods: [

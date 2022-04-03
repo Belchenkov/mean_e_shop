@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { CategoriesListResponse } from '@frontend/products';
 import { Category } from '@frontend/products';
@@ -11,8 +13,9 @@ import { CategoriesService } from '@frontend/products';
   templateUrl: './categories-list.component.html',
   styles: []
 })
-export class CategoriesListComponent implements OnInit {
+export class CategoriesListComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
+  endSubs$: Subject<any> = new Subject<any>();
 
   constructor(
     private categoryService: CategoriesService,
@@ -23,6 +26,12 @@ export class CategoriesListComponent implements OnInit {
 
   ngOnInit(): void {
     this._getCategories();
+    this.endSubs$.complete();
+  }
+
+  ngOnDestroy(): void {
+    this.endSubs$.next()
+    this.endSubs$.complete();
   }
 
   deleteCategory(categoryId: string) {
@@ -57,6 +66,9 @@ export class CategoriesListComponent implements OnInit {
 
   private _getCategories() {
     this.categoryService.getCategories()
+      .pipe(
+        takeUntil(this.endSubs$)
+      )
       .subscribe((data: CategoriesListResponse) => {
         this.categories = data.categoryList;
       });

@@ -11,6 +11,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { UiModule } from '@frontend/ui';
 import { NavComponent } from './shared/nav/nav.component';
+import { ProductsModule } from '@frontend/products';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     UiModule,
+    ProductsModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
     AccordionModule

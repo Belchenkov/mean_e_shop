@@ -14,7 +14,7 @@ import { LocalstorageService } from '../../services/localstorage.service';
   ]
 })
 export class LoginComponent implements OnInit {
-  loginFormGroup: FormGroup;
+  loginFormGroup: any;
   isSubmitted = false;
   authError = false;
   authMessage = 'Email or password are wrong!';

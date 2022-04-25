@@ -33,7 +33,7 @@ const routes: Routes = [
     ProductsModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
-    AccordionModule
+    AccordionModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccordionModule } from 'primeng/accordion';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -30,6 +31,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     UiModule,
+    HttpClientModule,
     ProductsModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),

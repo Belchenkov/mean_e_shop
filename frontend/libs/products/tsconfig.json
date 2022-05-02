@@ -12,6 +12,7 @@
     ],
     "compilerOptions": {
         "forceConsistentCasingInFileNames": true,
+        "emitDecoratorMetadata": false,
         "strict": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true

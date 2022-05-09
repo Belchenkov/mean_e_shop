@@ -36,4 +36,8 @@ export class ProductsService {
   deleteProduct(productId: string): Observable<IProductItemResponse> {
     return this.http.delete<IProductItemResponse>(`${this.api}${productId}`);
   }
+
+  getFeaturedProducts(count: number): Observable<ProductsListResponse> {
+    return this.http.get<ProductsListResponse>(`${this.api}/get/featured/${count}`);
+  }
 }

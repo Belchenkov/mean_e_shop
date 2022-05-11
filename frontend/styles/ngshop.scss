@@ -1,14 +1,17 @@
 // Base
+@import "~normalize.css/normalize.css";
 @import "./base/colors";
 @import "./base/fonts";
 @import "./base/mixins";
-@import "./base/configuration";
 
 // Libs
 @import "~primeicons/primeicons.css";
 @import "~primeng/resources/themes/saga-green/theme.css";
 @import "~primeng/resources/primeng.min.css";
 @import "~primeflex/primeflex.css";
+@import "~animate.css/animate.css";
+
+@import "./base/configuration";
 
 // Pages
 @import './apps/shop/pages/home-page';
@@ -16,8 +19,16 @@
 
 // Shared
 @import './apps/shop/shared/header';
+@import './apps/shop/shared/nav';
 @import './apps/shop/shared/footer';
 
 // Libs
 @import './libs/ui/ui';
+@import './libs/products/products';
+
+.container {
+  width: 1200px;
+  padding: 15px;
+  margin: 0 auto;
+}
 

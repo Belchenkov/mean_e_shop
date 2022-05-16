@@ -28,8 +28,16 @@ export class ProductsListComponent implements OnInit {
     this._getCategories();
   }
 
-  private _getProducts() {
-    this.productsService.getProducts()
+  public categoryFilter() {
+    const selectedCategories = this.categories
+      .filter((category: Category) => category.checked)
+      .map((category: Category) => category.id);
+
+    this._getProducts(selectedCategories);
+  }
+
+  private _getProducts(selectedCategories?: string[]) {
+    this.productsService.getProducts(selectedCategories)
       .subscribe((response: ProductsListResponse) => {
         if (response.success) {
           this.products = response.products;

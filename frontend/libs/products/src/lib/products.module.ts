@@ -4,6 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
+import { RatingModule } from 'primeng/rating';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { RippleModule } from 'primeng/ripple';
 
 import { OrdersModule } from '@frontend/orders';
 import { ProductsSearchComponent } from './components/products-search.component';
@@ -11,6 +14,7 @@ import { CategoriesBannerComponent } from './components/categories-banner/catego
 import { ProductItemComponent } from './components/product-item/product-item.component';
 import { FeaturedProductsComponent } from './components/featured-products/featured-products.component';
 import { ProductsListComponent } from './pages/products-list/products-list.component';
+import { ProductPageComponent } from './pages/product-page/product-page.component';
 
 const routes: Routes = [
   {
@@ -20,6 +24,10 @@ const routes: Routes = [
   {
     path: 'category/:categoryId',
     component: ProductsListComponent,
+  },
+  {
+    path: 'products/:productId',
+    component: ProductPageComponent,
   }
 ];
 
@@ -30,14 +38,18 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ButtonModule,
     CheckboxModule,
-    FormsModule
+    FormsModule,
+    RatingModule,
+    InputNumberModule,
+    RippleModule
   ],
     declarations: [
       ProductsSearchComponent,
       CategoriesBannerComponent,
       ProductItemComponent,
       FeaturedProductsComponent,
-      ProductsListComponent
+      ProductsListComponent,
+      ProductPageComponent
     ],
     exports: [
       ProductsSearchComponent,
@@ -45,6 +57,7 @@ const routes: Routes = [
       ProductItemComponent,
       FeaturedProductsComponent,
       ProductsListComponent,
+      ProductPageComponent,
     ]
 })
 export class ProductsModule {}

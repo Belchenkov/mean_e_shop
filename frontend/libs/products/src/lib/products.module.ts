@@ -15,6 +15,7 @@ import { ProductItemComponent } from './components/product-item/product-item.com
 import { FeaturedProductsComponent } from './components/featured-products/featured-products.component';
 import { ProductsListComponent } from './pages/products-list/products-list.component';
 import { ProductPageComponent } from './pages/product-page/product-page.component';
+import { UiModule } from '@frontend/ui';
 
 const routes: Routes = [
   {
@@ -41,7 +42,8 @@ const routes: Routes = [
     FormsModule,
     RatingModule,
     InputNumberModule,
-    RippleModule
+    RippleModule,
+    UiModule,
   ],
     declarations: [
       ProductsSearchComponent,

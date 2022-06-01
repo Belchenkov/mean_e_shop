@@ -1,6 +1,7 @@
 <div class='product-item' *ngIf='product'>
   <div class='product-item-wrapper'>
     <img
+      [routerLink]="'/products/' + product.id"
       class='image'
       [src]='product.image'
       [alt]='product.name'

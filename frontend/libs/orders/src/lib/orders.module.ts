@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { CartService } from './services/cart.service';
-import { CartIconComponent } from './components/cart-icon/cart-icon.component';
 
 @NgModule({
     imports: [
@@ -11,10 +10,8 @@ import { CartIconComponent } from './components/cart-icon/cart-icon.component';
       RouterModule,
     ],
     declarations: [
-      CartIconComponent
     ],
     exports: [
-      CartIconComponent
    ]
 })
 export class OrdersModule {

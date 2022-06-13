@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 import { Product } from '@frontend/products';
 import { IProductItemResponse } from '../../models/product-item-response';
 import { ProductsService } from '../../services/products.service';
+import { CartService } from '../../../../../orders/src/lib/services/cart.service';
+import { CartItem } from '../../../../../orders/src/lib/models/cart-item';
 
 @Component({
   selector: 'products-product-page',
@@ -15,12 +17,13 @@ import { ProductsService } from '../../services/products.service';
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
   product: Product = {};
-  quantity: number = 0;
+  quantity: number = 1;
   endSubs$: Subject<any> = new Subject<any>();
 
   constructor(
     private prodService: ProductsService,
     private route: ActivatedRoute,
+    private cartService: CartService,
   ) { }
 
   get beforePrice(): number {
@@ -34,6 +37,15 @@ export class ProductPageComponent implements OnInit, OnDestroy {
         this._getProduct(params.productId);
       }
     });
+  }
+
+  addProductToCart() {
+    const cartItem: CartItem = {
+      productId: this.product.id,
+      quantity: this.quantity,
+    };
+
+    this.cartService.setCartItem(cartItem);
   }
 
   ngOnDestroy(): void {
@@ -51,9 +63,5 @@ export class ProductPageComponent implements OnInit, OnDestroy {
           this.product = response.product;
         }
       })
-  }
-
-  addProductToCart() {
-
   }
 }

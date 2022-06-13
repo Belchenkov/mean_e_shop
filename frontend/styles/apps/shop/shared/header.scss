@@ -13,7 +13,9 @@ header {
   }
 
   .navigation {
-    padding-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .tools {

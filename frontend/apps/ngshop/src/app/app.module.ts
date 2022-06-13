@@ -12,6 +12,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { UiModule } from '@frontend/ui';
 import { NavComponent } from './shared/nav/nav.component';
 import { ProductsModule } from '@frontend/products';
+import { BadgeModule } from 'primeng/badge';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -25,15 +26,16 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent
   ],
-  imports: [
-    BrowserModule,
-    UiModule,
-    HttpClientModule,
-    ProductsModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot(routes),
-    AccordionModule,
-  ],
+    imports: [
+        BrowserModule,
+        UiModule,
+        HttpClientModule,
+        ProductsModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot(routes),
+        AccordionModule,
+        BadgeModule
+    ],
   providers: [],
   bootstrap: [AppComponent],
 })

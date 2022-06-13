@@ -20,6 +20,7 @@ import { EditorModule } from 'primeng/editor';
 import { TagModule } from 'primeng/tag';
 import { InputMaskModule } from 'primeng/inputmask';
 import { FieldsetModule } from 'primeng/fieldset';
+import { BadgeModule } from 'primeng/badge';
 
 import { AppComponent } from './app.component';
 import { CategoriesService } from '@frontend/products';
@@ -57,6 +58,7 @@ const UX_MODULE = [
   TagModule,
   FieldsetModule,
   InputMaskModule,
+  BadgeModule,
 ];
 
 @NgModule({

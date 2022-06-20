@@ -1,18 +1,34 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
 
+import { InputNumberModule } from 'primeng/inputnumber';
 import { CartService } from './services/cart.service';
+import { CartPageComponent } from './pages/cart-page/cart-page.component';
+
+const routes: Routes = [
+  {
+    path: 'cart',
+    component: CartPageComponent,
+  }
+];
 
 @NgModule({
-    imports: [
-      CommonModule,
-      RouterModule,
-    ],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    ButtonModule,
+    InputNumberModule,
+  ],
     declarations: [
-    ],
+
+    CartPageComponent
+  ],
     exports: [
-   ]
+
+    CartPageComponent
+  ]
 })
 export class OrdersModule {
   constructor(

@@ -6,17 +6,23 @@ import { Order } from '../models/order';
 import { environment } from '@env/environment';
 import { IOrdersListResponse } from '../models/orders-list-response';
 import { IOrderItemResponse } from '../models/order-item-response';
+import { IProductItemResponse } from '../../../../products/src/lib/models/product-item-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersService {
   apiURLOrders = environment.apiUrl + '/orders';
+  apiURLProducts = environment.apiUrl + '/products/';
 
   constructor(private http: HttpClient) {}
 
   getOrders(): Observable<IOrdersListResponse> {
     return this.http.get<IOrdersListResponse>(this.apiURLOrders);
+  }
+
+  getProduct(productId: string | undefined): Observable<IProductItemResponse> {
+    return this.http.get<IProductItemResponse>(`${this.apiURLProducts}${productId}`);
   }
 
   getOrder(orderId: string): Observable<IOrderItemResponse> {

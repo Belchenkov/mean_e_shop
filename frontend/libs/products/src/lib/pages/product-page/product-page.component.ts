@@ -55,7 +55,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 
   private _getProduct(productId: string) {
     this.prodService.getProduct(productId)
-      .pipe(
+        .pipe(
         takeUntil(this.endSubs$)
       )
       .subscribe((response: IProductItemResponse) => {

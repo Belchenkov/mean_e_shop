@@ -27,7 +27,7 @@ export class ProductsService {
     return this.http.get<ProductsListResponse>(`${this.api}`, { params });
   }
 
-  getProduct(productId: string): Observable<IProductItemResponse> {
+  getProduct(productId: string | undefined): Observable<IProductItemResponse> {
     return this.http.get<IProductItemResponse>(`${this.api}${productId}`);
   }
 

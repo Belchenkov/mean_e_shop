@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { CartService } from '../../services/cart.service';
 import { Cart } from '../../models/cart';
@@ -13,9 +15,11 @@ import { ICartItemDetailed } from '../../models/cart-item-detailed';
   styles: [
   ]
 })
-export class CartPageComponent implements OnInit {
-  quantity: string = '0';
+export class CartPageComponent implements OnInit, OnDestroy {
+  quantity = '0';
   cartItemsDetailed: ICartItemDetailed[] = [];
+  cartCount = 0;
+  endSubs$: Subject<any> = new Subject<any>();
 
   constructor(
     private router: Router,
@@ -27,19 +31,29 @@ export class CartPageComponent implements OnInit {
     this._getCartDetails();
   }
 
+  ngOnDestroy() {
+    this.endSubs$.next();
+    this.endSubs$.complete();
+  }
+
   backToShop(): void {
     this.router.navigate(['/products']);
   }
 
-  deleteCartItem() {
-
+  deleteCartItem(cartItem: ICartItemDetailed) {
+    this.cartService.deleteCartItem(cartItem.product?.id);
   }
 
   private _getCartDetails(): void {
     this.cartService
       .cart$
-      .pipe()
+      .pipe(
+        takeUntil(this.endSubs$)
+      )
       .subscribe((response: Cart) => {
+        this.cartItemsDetailed = [];
+        this.cartCount = response?.items.length ?? 0;
+
         response.items.forEach(cartItem => {
           this.ordersService.getProduct(cartItem.productId)
             .subscribe((res: IProductItemResponse) => {

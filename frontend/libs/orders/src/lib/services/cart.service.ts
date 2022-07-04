@@ -54,4 +54,15 @@ export class CartService {
 
     return cart;
   }
+
+  deleteCartItem(productId: string | undefined): void {
+    const cart = this.getCart();
+
+    cart.items = cart.items.filter(item => item.productId !== productId);
+
+    const cartJsonString = JSON.stringify(cart);
+    localStorage.setItem(CART_KEY, cartJsonString);
+
+    this.cart$.next(cart);
+  }
 }

@@ -72,4 +72,11 @@ export class CartPageComponent implements OnInit, OnDestroy {
     // @ts-ignore
     return item?.product?.price * item?.quantity;
   }
+
+  updateCartItemQuantity(event: { value: number }, cartItem: ICartItemDetailed) {
+    this.cartService.setCartItem({
+      productId: cartItem.product.id,
+      quantity: event.value,
+    }, true);
+  }
 }

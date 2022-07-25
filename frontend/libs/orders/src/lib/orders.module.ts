@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
 
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CartService } from './services/cart.service';
@@ -21,14 +22,15 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ButtonModule,
     InputNumberModule,
+    FormsModule,
   ],
     declarations: [
       OrderSummaryComponent,
-      CartPageComponent
+      CartPageComponent,
   ],
     exports: [
       OrderSummaryComponent,
-      CartPageComponent
+      CartPageComponent,
   ]
 })
 export class OrdersModule {

@@ -30,7 +30,7 @@ export class CartService {
     return JSON.parse(<string>localStorage.getItem(CART_KEY));
   }
 
-  setCartItem(cartItem: CartItem): Cart {
+  setCartItem(cartItem: CartItem, updateCartItem?: boolean): Cart {
     const cart: Cart = this.getCart();
 
     const cartItemsExist = cart.items?.find((item: CartItem) => item.productId === cartItem.productId);
@@ -39,7 +39,7 @@ export class CartService {
       cart.items?.map((item: CartItem) => {
         if (item.productId === cartItem.productId) {
           // @ts-ignore
-          item.quantity += cartItem.quantity;
+          item.quantity = updateCartItem ? cartItem.quantity : item.quantity + cartItem.quantity;
         }
 
         return item;

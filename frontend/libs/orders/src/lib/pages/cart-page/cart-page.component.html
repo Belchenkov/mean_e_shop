@@ -42,10 +42,12 @@
           <div class='p-col-3'>
             <div class='p-field cart-item-quantity'>
               <p-inputNumber
+                [(ngModel)]='cartItem.quantity'
                 mode='decimal'
                 [showButtons]='true'
                 [inputId]='quantity'
                 [max]='100'
+                (onInput)='updateCartItemQuantity($event, cartItem)'
               ></p-inputNumber>
             </div>
             <div class='cart-item-subtotal'>

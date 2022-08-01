@@ -37,4 +37,8 @@ export class UsersService {
   deleteUser(userId: string): Observable<IUsersItemResponse> {
     return this.http.delete<IUsersItemResponse>(`${this.api}${userId}`);
   }
+
+  getCountries() {
+    return [];
+  }
 }

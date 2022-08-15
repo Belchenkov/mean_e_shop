@@ -19,6 +19,9 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
+  "types": [
+    "node"
+  ],
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,

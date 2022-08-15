@@ -14,6 +14,7 @@
         }
     ],
     "compilerOptions": {
+      "types": ["node"],
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "noImplicitReturns": true,

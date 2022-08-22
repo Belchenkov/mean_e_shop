@@ -65,4 +65,13 @@ export class CartService {
 
     this.cart$.next(cart);
   }
+
+  emptyCart() {
+    const initialCart: Cart = {
+      items: [],
+    };
+
+    localStorage.setItem(CART_KEY, JSON.stringify(initialCart));
+    this.cart$.next(initialCart);
+  }
 }

@@ -68,7 +68,11 @@ export class CheckoutPageComponent implements OnInit {
 
     this.ordersService.createOrder(order)
       .subscribe(() => {
-        console.log('success');
+        this.router.navigate(['/success']);
+        this.cartService.emptyCart();
+      }, () => {
+        // display some message to user
+
       });
   }
 

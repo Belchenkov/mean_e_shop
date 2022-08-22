@@ -12,6 +12,7 @@ import { CartService } from './services/cart.service';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
+import { ThankYouComponent } from './pages/thank-you/thank-you.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'checkout',
     component: CheckoutPageComponent,
+  },
+  {
+    path: 'success',
+    component: ThankYouComponent,
   }
 ];
 
@@ -40,10 +45,12 @@ const routes: Routes = [
       OrderSummaryComponent,
       CartPageComponent,
       CheckoutPageComponent,
+      ThankYouComponent,
   ],
     exports: [
       OrderSummaryComponent,
       CartPageComponent,
+      ThankYouComponent,
   ]
 })
 export class OrdersModule {

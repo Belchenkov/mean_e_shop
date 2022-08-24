@@ -20,10 +20,12 @@ import { EditorModule } from 'primeng/editor';
 import { TagModule } from 'primeng/tag';
 import { InputMaskModule } from 'primeng/inputmask';
 import { FieldsetModule } from 'primeng/fieldset';
+import { BadgeModule } from 'primeng/badge';
 
 import { AppComponent } from './app.component';
 import { CategoriesService } from '@frontend/products';
 import { ProductsService } from '@frontend/products';
+import { OrdersModule } from '@frontend/orders';
 import { UsersModule, UsersService } from '@frontend/users';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ShellComponent } from './shared/shell/shell.component';
@@ -56,6 +58,7 @@ const UX_MODULE = [
   TagModule,
   FieldsetModule,
   InputMaskModule,
+  BadgeModule,
 ];
 
 @NgModule({
@@ -83,6 +86,7 @@ const UX_MODULE = [
     FormsModule,
     UsersModule,
     AppRoutingModule,
+    OrdersModule,
   ],
     providers: [
       CategoriesService,
@@ -96,6 +100,8 @@ const UX_MODULE = [
         multi: true,
       },
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [
+      AppComponent,
+    ]
 })
 export class AppModule {}

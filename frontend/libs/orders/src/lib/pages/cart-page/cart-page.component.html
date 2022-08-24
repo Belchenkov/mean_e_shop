@@ -1,0 +1,67 @@
+<div class='cart-page'>
+  <div class='p-grid'>
+    <div class='p-col-8'>
+      <div>
+        <button
+          pButton
+          class='p-button-info'
+          label='Continue shopping'
+          icon='pi pi-arrow-left'
+          (click)='backToShop()'
+        ></button>
+      </div>
+      <div>
+        <h4>
+          My cart: {{ cartCount }} Item(s)
+        </h4>
+      </div>
+      <div class='cart-shipping p-mb-5'>
+        Shipping after the payment, Delivery time: 1 to 4 working days
+      </div>
+      <div
+        *ngFor='let cartItem of cartItemsDetailed'
+        class='cart-item p-mb-5'
+      >
+        <div class='p-grid p-fluid'>
+          <div class='p-col-2 cart-item-image'>
+            <img [src]='cartItem.product.image' [attr.alt]='cartItem.product.name'>
+          </div>
+          <div class='p-col-7'>
+            <div class='cart-item-name'>{{ cartItem.product.name }}</div>
+            <div class='cart-item-price'>{{ cartItem.product.price | currency }}</div>
+            <div class='cart-item-remove'>
+              <button
+                type='button'
+                pButton
+                class='p-button-danger'
+                icon='pi pi-trash'
+                (click)='deleteCartItem(cartItem)'
+              ></button>
+            </div>
+          </div>
+          <div class='p-col-3'>
+            <div class='p-field cart-item-quantity'>
+              <p-inputNumber
+                [(ngModel)]='cartItem.quantity'
+                mode='decimal'
+                [showButtons]='true'
+                [inputId]='quantity'
+                [max]='100'
+                (onInput)='updateCartItemQuantity($event, cartItem)'
+              ></p-inputNumber>
+            </div>
+            <div class='cart-item-subtotal'>
+              Subtotal:
+              <span class='cart-item-subtotal-value'>
+                {{ getPrice(cartItem)  | currency }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='p-col-4'>
+      <orders-order-summary></orders-order-summary>
+    </div>
+  </div>
+</div>

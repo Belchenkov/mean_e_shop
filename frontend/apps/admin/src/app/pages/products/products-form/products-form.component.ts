@@ -100,7 +100,7 @@ export class ProductsFormComponent implements OnInit {
         this.editMode = true;
         this.currentProductId = params.id;
         this.productService.getProduct(this.currentProductId)
-          .subscribe((res: IProductItemResponse) => {
+            .subscribe((res: IProductItemResponse) => {
             if (res.success) {
               this.productForm.name.setValue(res.product.name);
               this.productForm.brand.setValue(res.product.brand);
